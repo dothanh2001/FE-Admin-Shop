@@ -1,6 +1,8 @@
 import type { FC } from 'react';
 
-import { Space } from 'antd';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { Modal, Space } from 'antd';
+import { log } from 'console';
 
 import MyButton from '@/components/basic/button';
 import MyTable from '@/components/core/table';
@@ -70,6 +72,41 @@ new Array(30).fill(undefined).forEach((item, index) => {
 });
 
 const OrderPage: FC = () => {
+  const [confirmModal, contextHolderConfirmPayment] = Modal.useModal();
+  const [removeModal, contextHolderRemovePayment] = Modal.useModal();
+
+  const handleShowConfirmAcceptPayment = () => {
+    confirmModal.confirm({
+      title: 'Xác nhận',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Xác nhận thanh toán đơn hàng?',
+      okText: 'Xác nhận',
+      cancelText: 'Huỷ',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
+  const handleShowConfirmRemovePayment = () => {
+    removeModal.confirm({
+      title: 'Xác nhận',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Xác nhận huỷ đơn hàng?',
+      okText: 'Xác nhận',
+      cancelText: 'Huỷ',
+      onOk() {
+        console.log('OK');
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  };
+
   return (
     <div className="aaa">
       <MyTable<ColumnType> dataSource={data} rowKey={record => record.key} height="100%">
@@ -86,8 +123,14 @@ const OrderPage: FC = () => {
           key="action"
           render={(text, record: any) => (
             <Space size="middle">
-              <MyButton type="text">Duyệt</MyButton>
-              <MyButton type="text">Xoá</MyButton>
+              <MyButton type="text" onClick={handleShowConfirmAcceptPayment}>
+                Xác nhận thanh toán
+              </MyButton>
+              {contextHolderConfirmPayment}
+              <MyButton type="text" onClick={handleShowConfirmRemovePayment}>
+                Huỷ
+              </MyButton>
+              {contextHolderRemovePayment}
             </Space>
           )}
         />

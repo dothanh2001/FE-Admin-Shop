@@ -18,26 +18,37 @@ export const CustomIcon: FC<CustomIconProps> = props => {
   const { type } = props;
   let com = <GuideSvg />;
 
-  if (type === 'guide') {
-    com = <GuideSvg />;
-  } else if (type === 'permission') {
-    com = <PermissionSvg />;
-  } else if (type === 'dashboard') {
-    com = <DashboardSvg />;
-  } else if (type === 'account') {
-    com = <AccountSvg />;
-  } else if (type === 'documentation') {
-    com = <DocumentationSvg />;
-  } else if (type === 'order') {
-    com = <OrderSvg />;
-  } else if (type === 'product') {
-    com = <ProductSvg />;
-  } else if (type === 'stock') {
-    com = <StockSvg />;
-  } else if (type === 'customer') {
-    com = <CustomerSvg />;
-  } else {
-    com = <GuideSvg />;
+  switch (type) {
+    case 'guide':
+      com = <GuideSvg />;
+      break;
+    case 'permission':
+      com = <PermissionSvg />;
+      break;
+    case 'dashboard':
+      com = <DashboardSvg />;
+      break;
+    case 'account':
+      com = <AccountSvg />;
+      break;
+    case 'documentation':
+      com = <DocumentationSvg />;
+      break;
+    case 'order':
+      com = <OrderSvg />;
+      break;
+    case 'product':
+      com = <ProductSvg />;
+      break;
+    case 'stock':
+      com = <StockSvg />;
+      break;
+    case 'customer':
+      com = <CustomerSvg />;
+      break;
+    default:
+      com = <GuideSvg />;
+      break;
   }
 
   return <span className="anticon">{com}</span>;
