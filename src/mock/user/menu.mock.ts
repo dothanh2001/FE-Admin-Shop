@@ -29,15 +29,40 @@ const mockMenuList: MenuList = [
     },
     icon: 'product',
     path: '/products',
-  },
-  {
-    code: 'stock',
-    label: {
-      zh_CN: '首页',
-      en_US: 'Nhập kho',
-    },
-    icon: 'stock',
-    path: '/stocks',
+    children: [
+      {
+        code: 'management',
+        label: {
+          zh_CN: '路由权限',
+          en_US: 'Quản lý sản phẩm',
+        },
+        path: '/products/management',
+      },
+      {
+        code: 'category',
+        label: {
+          zh_CN: '404',
+          en_US: 'Danh mục sản phẩm',
+        },
+        path: '/products/categories',
+      },
+      {
+        code: 'trademarked',
+        label: {
+          zh_CN: '404',
+          en_US: 'Thương hiệu',
+        },
+        path: '/products/trademarked',
+      },
+      {
+        code: 'natives',
+        label: {
+          zh_CN: '404',
+          en_US: 'Nguồn gốc',
+        },
+        path: '/products/natives',
+      },
+    ],
   },
   {
     code: 'customer',

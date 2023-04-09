@@ -30,6 +30,12 @@ const BusinessWithRadioCardsPage = lazy(
 const BusinessWithTabsPage = lazy(() => import(/* webpackChunkName: "with-tabs" */ '@/pages/business/with-tabs'));
 const OrderPage = lazy(() => import(/* webpackChunkName: "orders" */ '@/pages/orders'));
 const ProductPage = lazy(() => import(/* webpackChunkName: "products" */ '@/pages/products'));
+const NativePage = lazy(() => import(/* webpackChunkName: "products/native" */ '@/pages/products/natives'));
+const ManagementPage = lazy(() => import(/* webpackChunkName: "products/management" */ '@/pages/products/management'));
+const TradeMarkedPage = lazy(
+  () => import(/* webpackChunkName: "products/trademarked" */ '@/pages/products/trademarked'),
+);
+const CategoryPage = lazy(() => import(/* webpackChunkName: "products/trademarked" */ '@/pages/products/categories'));
 const StockPage = lazy(() => import(/* webpackChunkName: "stocks" */ '@/pages/stocks'));
 
 const routeList: RouteObject[] = [
@@ -56,6 +62,22 @@ const routeList: RouteObject[] = [
       {
         path: 'products',
         element: <WrapperRouteComponent element={<ProductPage />} titleId="title.products" />,
+      },
+      {
+        path: 'products/natives',
+        element: <WrapperRouteComponent element={<NativePage />} titleId="title.products.natives" />,
+      },
+      {
+        path: 'products/management',
+        element: <WrapperRouteComponent element={<ManagementPage />} titleId="title.products.management" />,
+      },
+      {
+        path: 'products/trademarked',
+        element: <WrapperRouteComponent element={<TradeMarkedPage />} titleId="title.products.trademarked" />,
+      },
+      {
+        path: 'products/categories',
+        element: <WrapperRouteComponent element={<CategoryPage />} titleId="title.products.categories" />,
       },
       {
         path: 'stocks',
