@@ -1,9 +1,14 @@
 import type { FC } from 'react';
 
-import { Space } from 'antd';
+import './index.less';
+
+import { ExclamationCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Modal, Space } from 'antd';
 import moment from 'moment';
+import { useState } from 'react';
 
 import MyButton from '@/components/basic/button';
+import MyModal from '@/components/basic/modal';
 import MyTable from '@/components/core/table';
 
 const { Column } = MyTable;
@@ -48,8 +53,51 @@ const data: ColumnType[] = [
 ];
 
 const TradeMarkedContainer: FC = () => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [deleteConfirm, deleteContextHolder] = Modal.useModal();
+
+  const handleShowCreateModal = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const handleOkCreate = () => {
+    setIsCreateModalOpen(false);
+  };
+
+  const handleCancelCreate = () => {
+    setIsCreateModalOpen(false);
+  };
+
+  const handleShowDeleteItemConfirm = () => {
+    deleteConfirm.confirm({
+      title: 'Confirm',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Bla bla ...',
+      okText: 'Xác nhận',
+      cancelText: 'Huỷ',
+    });
+  };
+
+  const handleShowUpdateItemModal = () => {
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleOkUpdate = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const handleCancelUpdate = () => {
+    setIsUpdateModalOpen(false);
+  };
+
   return (
-    <div className="aaa">
+    <div className="trademarked">
+      <div className="trademarked-header">
+        <Button type="primary" icon={<PlusCircleOutlined />} onClick={handleShowCreateModal}>
+          Thêm mới
+        </Button>
+      </div>
       <MyTable<ColumnType> dataSource={data} rowKey={record => record.key}>
         <Column title="Mã" dataIndex="tradeMarkedId" key="tradeMarkedId" />
         <Column title="Thương hiệu" dataIndex="tradeMarkedName" key="tradeMarkedName" />
@@ -60,12 +108,34 @@ const TradeMarkedContainer: FC = () => {
           key="action"
           render={(text, record: any) => (
             <Space size="middle">
-              <MyButton type="text">Sửa</MyButton>
-              <MyButton type="text">Xoá</MyButton>
+              <MyButton type="text" onClick={handleShowUpdateItemModal}>
+                Sửa
+              </MyButton>
+              <MyButton type="text" onClick={handleShowDeleteItemConfirm}>
+                Xoá
+              </MyButton>
             </Space>
           )}
         />
       </MyTable>
+
+      {/* Modal place */}
+      <MyModal title="Tạo mới thương hiệu" open={isCreateModalOpen} onOk={handleOkCreate} onCancel={handleCancelCreate}>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </MyModal>
+      <MyModal
+        title="Cập nhật thương hiệu"
+        open={isUpdateModalOpen}
+        onOk={handleOkUpdate}
+        onCancel={handleCancelUpdate}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </MyModal>
+      {deleteContextHolder}
     </div>
   );
 };

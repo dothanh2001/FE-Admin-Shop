@@ -1,9 +1,14 @@
 import type { FC } from 'react';
 
-import { Space } from 'antd';
+import './index.less';
+
+import { ExclamationCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Modal, Space } from 'antd';
 import moment from 'moment';
+import { useState } from 'react';
 
 import MyButton from '@/components/basic/button';
+import MyModal from '@/components/basic/modal';
 import MyTable from '@/components/core/table';
 
 const { Column } = MyTable;
@@ -48,8 +53,51 @@ const data: ColumnType[] = [
 ];
 
 const NativeContainer: FC = () => {
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [deleteConfirm, deleteContextHolder] = Modal.useModal();
+
+  const handleShowCreateModal = () => {
+    setIsCreateModalOpen(true);
+  };
+
+  const handleOkCreateNative = () => {
+    setIsCreateModalOpen(false);
+  };
+
+  const handleCancelCreateNative = () => {
+    setIsCreateModalOpen(false);
+  };
+
+  const handleShowDeleteItemConfirm = () => {
+    deleteConfirm.confirm({
+      title: 'Confirm',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Bla bla ...',
+      okText: 'Xác nhận',
+      cancelText: 'Huỷ',
+    });
+  };
+
+  const handleShowUpdateItemModal = () => {
+    setIsUpdateModalOpen(true);
+  };
+
+  const handleOkUpdateNative = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const handleCancelUpdateNative = () => {
+    setIsUpdateModalOpen(false);
+  };
+
   return (
-    <div className="aaa">
+    <div className="natives">
+      <div className="native-header">
+        <Button type="primary" icon={<PlusCircleOutlined />} onClick={handleShowCreateModal}>
+          Thêm mới
+        </Button>
+      </div>
       <MyTable<ColumnType> dataSource={data} rowKey={record => record.key}>
         <Column title="Mã" dataIndex="nativeId" key="nativeId" />
         <Column title="Xuất xứ" dataIndex="nativeName" key="nativeName" />
@@ -60,12 +108,38 @@ const NativeContainer: FC = () => {
           key="action"
           render={(text, record: any) => (
             <Space size="middle">
-              <MyButton type="text">Sửa</MyButton>
-              <MyButton type="text">Xoá</MyButton>
+              <MyButton type="text" onClick={handleShowUpdateItemModal}>
+                Sửa
+              </MyButton>
+              <MyButton type="text" onClick={handleShowDeleteItemConfirm}>
+                Xoá
+              </MyButton>
             </Space>
           )}
         />
       </MyTable>
+      {/* Modal place */}
+      <MyModal
+        title="Tạo mới xuất xứ"
+        open={isCreateModalOpen}
+        onOk={handleOkCreateNative}
+        onCancel={handleCancelCreateNative}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </MyModal>
+      <MyModal
+        title="Cập nhật xuất xứ"
+        open={isUpdateModalOpen}
+        onOk={handleOkUpdateNative}
+        onCancel={handleCancelUpdateNative}
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </MyModal>
+      {deleteContextHolder}
     </div>
   );
 };
